@@ -25,7 +25,7 @@ urlcolor: blue
 fontsize: 12pt
 biblio-style: apalike
 abstract: |
-  Bu bölümde çalışmanızın özetini yazınız.
+  Ülkelerin ekonomilerinin en önemli makroekonomik politika hedeflerinden biri ekonomik büyümenin gerçekleştirilmesidir. Bu nedenle büyümenin kaynağının tespit edilerek bu yönde politikalar uygulanması son derece önemlidir. Çalışmada, 2009Q1 - 2020Q4 dönemi verileri kullanılarak Türkiye'de ekonomik büyümeyi etkileyen faktörlerin değerlendirilmesi amaçlanmıştır. Ekonomik büyümenin; faiz, döviz kuru, para arzı ve enflasyona bağlı olarak büyümenin ne derece etkilendiği regresyon analizi yapılarak araştırılmıştır. Ayrıca g ve M arasındaki ilişkiyi göstermek için saçılım grafiği, g ve R arasındaki ilişkiyi göstermek için çizgi grafiği, g ve p arasındaki ilişkiyi göstermek için kutu grafiği, g ve E arasındaki ilişkiyi göstermek için hexbin yoğunluk grafiği kullanılmıştır ve her bir değişkenin kendi dağılımını ve aynı zamanda diğer değişkenler arasındaki ilişkiyi incelemek için dağılım matrisi grafiği kullanılmıştır. Yapılan analizde enflasyon ve para arzı değişkenlerinin istatistiksel olarak anlamlı olduğu sonucuna varılmıştır. Para arzındaki artışın ekonomik büyümeyi arttırdığı sonucuna varılırken, enflasyon oranındaki artışın ekonomik büyümeyi azalttığı sonucuna varılmıştır. Faiz ve döviz kurunun istatistiksel olarak anlamlı olmadığı görülmüştür.
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache = FALSE, echo = TRUE, message = FALSE, warning = FALSE)
@@ -64,7 +64,7 @@ $E_t$:Nominal Döviz Kuru(Dolar kurundaki 3'er aylık yüzde değişme)
 
 ```{r, echo=FALSE}
 library(readr)
-Veriler <- read_csv("data/Veriler.csv")
+Veriler <- read_csv("C:/Users/arahi/OneDrive/Masaüstü/istatistik_butunleme/istatistikbutunleme/data/Veriler.csv")
 View(Veriler)
 ```
 
@@ -76,16 +76,18 @@ library(summarytools)
 st_options(lang = "tr")
 ```
 
-
-
 ```{r results='asis', echo=FALSE}
+library(dplyr)
+
 Veriler %>%
-  select("date", "g", "M", "R", "p", "E") %>% 
+  select(date, g, M, R, p, E) %>% 
   descr(stats = c("mean", "sd", "min", "med", "max"), transpose = TRUE) %>% 
   xtable(caption = "Özet İstatistikler",
          label = "tab:ozet",
-         align = c("l", "c", "c", "c", "c", "c", "c")) %>% 
+         align = c("l", "c", "c", "c", "c", "c")) %>% 
   print(booktabs = TRUE, comment = FALSE, caption.placement = "top")
+
+
 ```
 
 
@@ -104,24 +106,164 @@ $\alpha_2$ :Özellikle Türkiye gibi üretimde ithal girdi kullanan ülkeler iç
 dolayı ortaya çıkacak ihracat artışının getireceği olumlu etkiden daha baskındır. Bu durumda döviz kuru ile büyüme düzeyi arasındaki ilişkiyi gösteren $\alpha_2$ katsayısının negatif (-) işaretli
 olması beklenir.
 
-$\alpha_3$ :Bir piyasada beklenen enflasyon artınca insanlar tüketimlerini arttırır ve para talep ederler. Para talebinin artması sonucu faiz oranları artar. Bu nedenle $\alpha_3$ katsayısının işaretinin pozitif (+) olması beklenir.
+$\alpha_3$ :Geçmişten günümüze kadar bakıldığında enflasyonun büyümeye bazen pozitif bazen negatif etki ettiği görülmektedir. İkinci Dünya Savaşı'ndan 1970'lerin sonuna kadar enflasyonun büyümeyi pozitif etkilediği görülmektedir. O dönemlerde uygulanan Keynesyen politikalar da bunu destekler niteliktedir. Ama 1970'li yıllardan sonra yüksek enflasyon ve yüksek büyüme hızları arsındaki ilişki kopmuştur ve pozitif ilişki yerini negatif ilişkiye bırakmıştır. Bu gelişmelere dayanarak $\alpha_3$ katsayısının belirsiz olduğu sonucuna varabiliriz.  
 
 $\alpha_4$ :Para arzındaki değişmenin faiz üzerinde dört etkisi vardır. Bunlardan, Likidite Etkisi para arzı ile faiz oranı arasındaki ilişkinin ters yönlü olduğunu söylerken; gelir etkisi, fiyat ile enflasyon etkisi ve fisher etkisi aynı yönlü bir ilişkiyi işaret eder. Bu durumda $\alpha_4$ 'ün beklenen işareti belirsizdir.
 
 $\varepsilon_t$ :Hata terimi
 
 
-```{r plot, fig.align='center', fig.cap='Muhteşem Bir Grafik'}
-survey %>% 
-  ggplot(aes(x = handedness, y = handspan)) +
+
+
+
+Şekil \@ref(fig:plot1): iki sürekli değişken arasındaki ilişkiyi ölçmek için kullanılan bir saçılım grafiğidir. Saçılım grafiği, bir değişkenin diğer değişkene olan etkisini, dağılımını ve ilişkisini anlamak için kullanılır. Bu şekilde görüldüğü üzere g ve M arsaında pozitif bir ilişki vardır.
+
+
+
+
+```{r plot1, fig.align='center', fig.cap='g ve M için saçılım grafiği' , echo=FALSE}
+library(ggplot2)
+ggplot(Veriler, aes(x = M, y = g)) +
   geom_point() +
-  geom_smooth() +
-  scale_x_continuous("Handedness") + 
-  scale_y_continuous("Handspan")
+  geom_smooth(method = "lm", se = FALSE, color = "blue") +
+  labs(x = "M", y = "g", title = "g ve M için Saçılım Grafiği")
 ```
 
 
+
+
+
+
+
+Şekil \@ref(fig:plot2):g ve R arasındaki ilişkiyi ölçmek için oluşturulan bir çizgi grafiğidir. Grafiğe bakıldığında iki değişken arasında dalgalanmaların olduğu görülmektedir. 
+
+
+```{r plot2, fig.align='center', fig.cap='g ve R için çizgi grafiği' , echo=FALSE}
+ggplot(Veriler, aes(x = R, y = g)) +
+  geom_line() 
+```
+
+ 
+
+
+
+
+
+
+
+Şekil \@ref(fig:plot3): g ve p arasındaki ilişkiyi ölçmek için oluşturulan bir kutu grafiğidir. Grafiğin ortasındaki çizgi medyandır, üstündeki ve altındaki çizgiler 25. ve 75. yüzdeliklerdir. Kutu grafiğindeki bıyıklar ise verilerin maksimum ve minimum noktalarını gösterir.
+
+
+
+```{r plot3, fig.align='center', fig.cap='g ve p için kutu grafiği' , echo=FALSE}
+Veriler %>% 
+  na.omit() %>% 
+  ggplot(aes(x = p, y = g)) +
+  geom_boxplot() +
+  labs(x = "enflasyon",
+       y = "büyüme") 
+```
+
+
+
+Şekil \@ref(fig:plot4): g ve E arasındaki ilişkiyi göstermek için oluşturulan bir hexbin yoğunluk grafiğidir. Koyu renkteki bölgeler, daha yoğun veri noktalarına işaret ederken açık renkteki bölgeler, daha seyrek noktaları temsil eder. 
+
+
+```{r plot4, fig.align='center', fig.cap='g ve E için hexbin yoğunluk grafiği' , echo=FALSE}
+ggplot(Veriler, aes(x=E, y=g) ) +
+  geom_hex() +
+  theme_bw() 
+```
+
+
+
+
+Şekil \@ref(fig:plot5): dağılım matrisini gösterir. Bu grafik, her bir değişkenin kendi dağılımını ve aynı zamanda değişkenler arasındaki ilişkileri incelemek için kullanılır. Dağılım matrisi grafiği, veri setindeki herbir değişkenin kendi ekseninde gösterildiği ve diğer değişkenlerle olan ilişkilerinin matris şeklinde düzenlendiği bir görseldir.
+
+
+
+
+```{r plot5, fig.align='center', fig.cap='dağılım matrisi grafiği' , echo=FALSE}
+Veriler %>% 
+  select(g, E, R, M, p) %>% 
+  GGally::ggpairs()
+
+```
+
+
+
+
+
+
+
+```{r, echo=FALSE}
+model <- lm(g ~ M + R + p + E, data = Veriler)
+```
+
+```{r, echo=FALSE}
+summary(model)
+```
+
+```{r, echo=FALSE}
+coefficients <- coef(model)
+intercept <- coefficients[1]
+coef_M <- coefficients[2]
+coef_R <- coefficients[3]
+coef_p <- coefficients[4]
+coef_E <- coefficients[5]
+```
+
+```{r, echo=FALSE}
+model <- lm(g ~ M + R + p + E, data = Veriler)
+library(equatiomatic)
+equation <- extract_eq(model)
+print(equation)
+```
+
+```{r, echo=FALSE}
+model <- lm(formula = g ~ M + R + p + E, data = Veriler)
+
+coefs <- coef(model)[-1]
+```
+
+```{r, echo=FALSE}
+regression_equation <- paste("g =", intercept, "+", coef_M, "* M +", coef_R, "* R +", coef_p, "* p +", coef_E, "* E")
+```
+
+```{r, echo=FALSE}
+coefs <- c(0.6606, 0.1507, -3.9169, -0.0141)
+```
+
+```{r, echo=FALSE}
+equation <- paste("g =", intercept, "+", paste(coefs, c("M", "R", "p", "E"), sep = "*", collapse = " + "))
+print(equation)
+intercept <- round(intercept, 3)
+coefs <- round(coefs, 3)
+```
+
+$$
+g = 4.0761 + 0.1507 R - 0.0141 E - 3.9169 p + 0.6606 M 
+$$
+
+
+
+
+
+
+```{r, echo=FALSE}
+remotes::install_github("datalorax/equatiomatic")
+```
+
+
+
+
 # Sonuç
+Yapılan regresyon sonucunda modelin anlamlı olup olmadığına bakmak için F tablosuna bakıp F hesaplanan ile F tablosunu karşılaştırmak gerekmektedir. Regresyon sonucunda F hesaplanan = 10.99 çıkmıştır. F(0.05;4;43) yaklaşık değeri 2.58'dir. F hesap > F tablo değeri olduğu için, H0: B0 = B1 = B2 = B3 = B4 = 0 hipotezi reddedilir. Dolayısıyla modelin %95 düzeyinde anlamlı olduğu sonucuna varılır. R2 yani çoklu belirtme katsayısı, bağımlı değişkendeki değişimin yüzde kaçının bağımsız değişkence açıklanabileceğini gösterir. Dolayısıyla bağımlı değişkenin bağımsız değişkenlerce açıklama yüzdesi %50,96'dır. Katsayılar ile ilgili değerlendirme yapmadan önce katsayıların anlamlı olup olmadığına bakmak gerekmektedir. Yapılan regresyon sonucunda M ve p katsayılarının %95 güven düzeyinde anlamlı olduğu sonucuna varılmıştır. M için hipotezimiz; H0: a=0 
+H1: a!=0. Prob(0.000196) < 0.05 olduğu için H0 hipotezi reddedilir ve katsayının anlamlı olduğu sonucuna varılır. p için hipotezimiz; 
+H0: a=0 
+H1: a!=0. Prob(0.0000000853) < 0.05 olduğu için H0 hipotezi reddedilir ve katsayının anlamlı olduğu sonucuna varılır. Para arzı ve büyüme arasında pozitif ilişki olduğu yani para arzındaki bir birimlik artışın büyümeyi 0.66 birim arttırdığı görülmektedir. Enflasyon oranındaki bir birim artışın ise büyümeyi -3.9 birim azalttığı görülmektedir.
+
+
 $E$ :Nominal Döviz Kuru değeri -8.23 ile 27.32 arasında değişiklik göstermiştir. Ortalama değer 1.66 olurken standart sapma 6.27’dir. Örneklem veri serisinin küçükten büyüğe doğru sıralanmasında, seriyi ortadan ikiye ayıran değer olan medyan değeri 1.06’dır.
 
 $M$ :Para Arzındaki Büyüme Oranının -8.75 ile 21.06 arasında değişkenlik gösterdiği görülmektedir. Ortalama para arzındaki büyüme oranı %5.07 olurken standart sapma 6.10’dur. Medyan değerinin ise 5.27 olduğu görülmektedir.
