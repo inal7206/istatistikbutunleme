@@ -41,14 +41,14 @@ knitr::opts_chunk$set(cache = FALSE, echo = TRUE, message = FALSE, warning = FAL
 # Giriş
 Ekonomik büyüme, bir ulusun gelişmişlik seviyesini gösteren en önemli unsurdur.Ekonomik büyümeyi açıklamak bazı değişkenlerle olur.Bu değişkenler de ekonometrik analiz ile olur.
 İktisat teorisi ve iktisadi olayların analiz edilerek sayısal sonuçların elde edilmesi ekonometri ile mümkündür.Ekonometride iktisadi sorun önce teorik olarak incelenir,sonra ilgili değişkenler arasındaki ilişki ya da ilişkiler matematiksel bir model halinde formüle edilir (@yalta2011ekonometri).
-Çalışmada büyüme değişkeni bağımlı değişken olarak ele alınmıştır.Büyümeyi etkileyen bağımsız değişkenler olarak faiz, para arzı, döviz kuru ve enflasyon ele alınmıştır.Bu çalışmayı açıklama için Klasik Teori, Keynesyen Teori ve Monetarist Teori de kullanılmıştır.
+Çalışmada büyüme değişkeni bağımlı değişken olarak ele alınmıştır.Büyümeyi etkileyen bağımsız değişkenler olarak faiz, para arzı, döviz kuru ve enflasyon ele alınmıştır.Bu çalışmayı açıklama için Klasik Teori, Keynesyen Teori ve Monetarist Teoriden yararlanılmıştır.
 Klasik Teori'ye göre para arzındaki ($M$) artış reel ekonomiyi etkilemezken fiyatlar genel düzeyini ($p$) arttırır.Bu yaklaşıma göre uzun dönemde Gayri Safi Milli Hasıla ve dolaşım hızı sabittir; para arzı arttığında sadece fiyatlar genel düzeyi aynı yönde ve oranda değişir (@oktar2011turkiye).
 Keynesyen Teori'ye göre, para arzındaki artış faiz oranlarının ($R$) düşmesine neden olur.Faiz oranlarındaki bu düşüş ise (yatırımların faiz esnekliği sıfır değilse) yatırımların artmasına neden olur. Yatırımların artması da toplam harcamaları ve Gayri Safi Milli Hasılayı arttırır (kısa dönem için).
 Monetarist Yaklaşım'a göre ise para arzındaki artış kısa dönemde Gayri Safi Milli Hasıla'yı arttırır, uzun dönemde ise sadece fiyatlar genel seviyesini arttırır (@cengiz2008keynesyen).
 
 ## Çalışmanın Amacı
-Faiz, para arzı, döviz kuru ve enflasyondaki değişmelerin ekonomik büyümeye etkisinin 2009-2021 yılları arasındaki veriler ele alınarak ekonometrik bir analiz hedeflenmektedir.Bu analizi gerçekleştirmek için klasik teori, keynesyen teori ve monetarist teoriden de faydalanılmıştır.
-Ekonomik büyüme, bir ulusun gelişmişlik seviyesini gösteren etkenlerden biridir.Bu çalışmada ülkemizin 2009-2021 yılları arasındaki verilerine bakarak ekonomik büyümeyi ve ülkenin gelişmişliğini açıklamaya çalışacağız.
+Faiz, para arzı, döviz kuru ve enflasyondaki değişmelerin ekonomik büyümeye etkisinin 2009-2021 yılları arasındaki veriler ele alınarak ekonometrik bir analiz yapılması hedeflenmektedir.Bu analizi gerçekleştirmek için klasik teori, keynesyen teori ve monetarist teoriden de faydalanılmıştır.
+Ekonomik büyüme, bir ulusun gelişmişlik seviyesini gösteren faktörlerden biridir.Bu çalışmada ülkemizin 2009-2021 yılları arasındaki veriler ele alınarak ekonomik büyümeye etki eden değişkenler ile ilgili değerlendirme yapılacaktır.
 
 ## Literatür 
 
@@ -56,7 +56,6 @@ Ekonomik büyüme ve ekonomik büyümeyi etkileyen faktörler ile ilgili çalı�
 
 # Veri 
 Çalışmada bağımlı değişken olarak büyüme ($g_t$) ele alınmıştır.Bağımsız değişkenler olarak faiz ($R_t$), döviz kuru($E_t$), para arzı ($M_t$) ve enflasyon($pt$) ele alınmıştır.Çalışmadaki değişkenlere ait veriler T.C.Merkez Bankası web sayfasından elde edilmiştir ve üçer aylık verilerle çalışmak üzere on iki yılı içeren 2009Q1 - 2020Q4 dönemi ele alınmıştır.Ele alınan değişkenler ile ilgili detaylar şu şekildedir:
-$g_t$:Büyüme Oranı(GSYİH 3'er aylık değişme)
 $M_t$:Para Arzındaki Büyüme Oranı(Parasal tabandaki 3'er aylık değişme)
 $R_t$:Nominal Faiz Oranı(3 aylık mevduat yıllık faiz oranı)
 $p_t$:Enflasyon Oranı(Deflatördeki 3'er aylık değişme)
@@ -258,10 +257,10 @@ remotes::install_github("datalorax/equatiomatic")
 
 
 # Sonuç
-Yapılan regresyon sonucunda modelin anlamlı olup olmadığına bakmak için F tablosuna bakıp F hesaplanan ile F tablosunu karşılaştırmak gerekmektedir. Regresyon sonucunda F hesaplanan = 10.99 çıkmıştır. F(0.05;4;43) yaklaşık değeri 2.58'dir. F hesap > F tablo değeri olduğu için, H0: B0 = B1 = B2 = B3 = B4 = 0 hipotezi reddedilir. Dolayısıyla modelin %95 düzeyinde anlamlı olduğu sonucuna varılır. R2 yani çoklu belirtme katsayısı, bağımlı değişkendeki değişimin yüzde kaçının bağımsız değişkence açıklanabileceğini gösterir. Dolayısıyla bağımlı değişkenin bağımsız değişkenlerce açıklama yüzdesi %50,96'dır. Katsayılar ile ilgili değerlendirme yapmadan önce katsayıların anlamlı olup olmadığına bakmak gerekmektedir. Yapılan regresyon sonucunda M ve p katsayılarının %95 güven düzeyinde anlamlı olduğu sonucuna varılmıştır. M için hipotezimiz; H0: a=0 
-H1: a!=0. Prob(0.000196) < 0.05 olduğu için H0 hipotezi reddedilir ve katsayının anlamlı olduğu sonucuna varılır. p için hipotezimiz; 
-H0: a=0 
-H1: a!=0. Prob(0.0000000853) < 0.05 olduğu için H0 hipotezi reddedilir ve katsayının anlamlı olduğu sonucuna varılır. Para arzı ve büyüme arasında pozitif ilişki olduğu yani para arzındaki bir birimlik artışın büyümeyi 0.66 birim arttırdığı görülmektedir. Enflasyon oranındaki bir birim artışın ise büyümeyi -3.9 birim azalttığı görülmektedir.
+Yapılan regresyon sonucunda modelin anlamlı olup olmadığına bakmak için F tablosuna bakıp F hesaplanan ile F tablosunu karşılaştırmak gerekmektedir. Regresyon sonucunda F hesaplanan = 10.99 çıkmıştır. F(0.05;4;43) yaklaşık değeri 2.58'dir. $F hesap$ > $F tablo$ değeri olduğu için, $H_0$: $\alpha_0$ = $\alpha_1$ = $\alpha_2$ = $\alpha_3$ = $\alpha_4$ = 0 hipotezi reddedilir. Dolayısıyla modelin %95 güven düzeyinde anlamlı olduğu sonucuna varılır. $R^2$ yani çoklu belirtme katsayısı, bağımlı değişkendeki değişimin yüzde kaçının bağımsız değişkence açıklanabileceğini gösterir. Dolayısıyla bağımlı değişkenin bağımsız değişkenlerce açıklama yüzdesi %50,96'dır. Katsayılar ile ilgili değerlendirme yapmadan önce katsayıların anlamlı olup olmadığına bakmak gerekmektedir. Yapılan regresyon sonucunda M ve p katsayılarının %95 güven düzeyinde anlamlı olduğu sonucuna varılmıştır. M için hipotezimiz; $H_0$: $\alpha_4$ 
+$H_1$: $\alpha_4 \neq 0$ . Prob(0.000196) < 0.05 olduğu için H0 hipotezi reddedilir ve katsayının anlamlı olduğu sonucuna varılır. p için hipotezimiz; 
+$H_0$: $\alpha_3=0$ 
+$H_1$: $\alpha_3 \neq 0$. Prob(0.0000000853) < 0.05 olduğu için H0 hipotezi reddedilir ve katsayının anlamlı olduğu sonucuna varılır. Para arzı ve büyüme arasında pozitif ilişki olduğu yani para arzındaki bir birimlik artışın büyümeyi 0.66 birim arttırdığı görülmektedir. Enflasyon oranındaki bir birim artışın ise büyümeyi -3.9 birim azalttığı görülmektedir.
 
 
 $E$ :Nominal Döviz Kuru değeri -8.23 ile 27.32 arasında değişiklik göstermiştir. Ortalama değer 1.66 olurken standart sapma 6.27’dir. Örneklem veri serisinin küçükten büyüğe doğru sıralanmasında, seriyi ortadan ikiye ayıran değer olan medyan değeri 1.06’dır.
@@ -272,8 +271,7 @@ $p$ :Enflasyon Oranının -0.37 ile 5.44 arasında değişiklik göstermiştir. 
 
 $R$ :Nominal Faiz Oranının 7.15 ile 22.57 arasında değişkenlik gösterdiği görülmektedir. Nominal faiz oranının ortalama değeri 13.44’tür. Standart sapmasının 4.67 olduğu görülmektedir. Nominal faiz oranının ortanca değeri ise 11.54’tür.
 
-$g$ :Büyüme Oranının -14.02 ile 17.43 arasında değişkenlik gösterdiği görülmektedir. Ortalama büyüme oranı %1.53 olurken standart sapma 9.21’dir. Medyan değerinin ise 0.53 olduğu
-görülmektedir.
+
 
 \newpage
 # Kaynakça {#references}
